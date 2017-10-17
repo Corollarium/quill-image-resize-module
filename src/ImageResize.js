@@ -69,6 +69,12 @@ export default class ImageResize {
                 module.onUpdate();
             },
         );
+		// TODO this works, but it's an awful solution.
+		// A simple "quill.trigger('text-change')" should suffice, But I coudn't find a way to
+		// make this trigger
+		$(this.quill.container.parentNode).find('textarea').val(
+			$(this.quill.container).find('.ql-editor').html()
+		);
     };
 
     removeModules = () => {
