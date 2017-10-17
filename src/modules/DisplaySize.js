@@ -49,8 +49,12 @@ export class DisplaySize extends BaseModule {
         }
     };
 
-    getCurrentSize = () => [
-        this.img.width,
-        Math.round((this.img.width / this.img.naturalWidth) * this.img.naturalHeight),
-    ];
+    getCurrentSize = () => {
+		var width = $(this.img).width();
+		var height = $(this.img).height();
+		return [
+			width,
+			Math.round((width / width) * height),
+		]
+	};
 }

@@ -82,17 +82,24 @@ export default class ImageResize {
     };
 
     handleClick = (evt) => {
-        if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === 'IMG') {
-            if (this.img === evt.target) {
-                // we are already focused on this image
-                return;
-            }
-            if (this.img) {
-                // we were just focused on another image
-                this.hide();
-            }
-            // clicked on an image inside the editor
-            this.show(evt.target);
+        var target = evt.target;
+        if (!target || !target.tagName) {
+            return;
+        }
+
+		var $el = $(target).closest('.loh-filedata-main', this.quill.root);
+		if ($el.length) {
+			target = $el[0];
+            if (this.img === target) {
+				// we are already focused on this image
+				return;
+			}
+			else if (this.img) {
+				// we were just focused on another image
+				this.hide();
+			}
+			// clicked on an image inside the editor
+			this.show(target);
         } else if (this.img) {
             // clicked on a non image
             this.hide();

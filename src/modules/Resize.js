@@ -60,7 +60,7 @@ export class Resize extends BaseModule {
         // note starting mousedown position
         this.dragStartX = evt.clientX;
         // store the width before the drag
-        this.preDragWidth = this.img.width || this.img.naturalWidth;
+        this.preDragWidth = $(this.img).width();
         // set the proper cursor everywhere
         this.setCursor(this.dragBox.style.cursor);
         // listen for movement and mouseup
@@ -85,10 +85,10 @@ export class Resize extends BaseModule {
         const deltaX = evt.clientX - this.dragStartX;
         if (this.dragBox === this.boxes[0] || this.dragBox === this.boxes[3]) {
             // left-side resize handler; dragging right shrinks image
-            this.img.width = Math.round(this.preDragWidth - deltaX);
+            $(this.img).width(Math.round(this.preDragWidth - deltaX));
         } else {
             // right-side resize handler; dragging right enlarges image
-            this.img.width = Math.round(this.preDragWidth + deltaX);
+            $(this.img).width(Math.round(this.preDragWidth + deltaX));
         }
         this.requestUpdate();
     };
