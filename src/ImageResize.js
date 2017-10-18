@@ -16,6 +16,7 @@ export default class ImageResize {
     constructor(quill, options = {}) {
         // save the quill reference and options
         this.quill = quill;
+		var that = this;
 
         // Apply the options to our defaults, and stash them for later
         // defaultsDeep doesn't do arrays as you'd expect, so we'll need to apply the classes array from options separately
@@ -37,6 +38,9 @@ export default class ImageResize {
 
         // respond to clicks inside the editor
         this.quill.root.addEventListener('click', this.handleClick, false);
+
+		var timer = null;
+        this.quill.root.addEventListener('scroll', this.handleScroll, false);
 
         this.quill.root.parentNode.style.position = this.quill.root.parentNode.style.position || 'relative';
 
@@ -62,7 +66,7 @@ export default class ImageResize {
         this.onUpdate();
     };
 
-    onUpdate = () => {
+    onUpdate = (x) => {
         this.repositionElements();
         this.modules.forEach(
             (module) => {
@@ -86,6 +90,13 @@ export default class ImageResize {
 
         this.modules = [];
     };
+
+	handleScroll = () => {
+		window.clearTimeout(this._timer);
+		this._timer = setTimeout(() => {
+			this.repositionElements();
+		}, 50);
+	};
 
     handleClick = (evt) => {
         var target = evt.target;
