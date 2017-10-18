@@ -40,12 +40,14 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconAlignCenter,
                 apply: () => {
-					// TODO isso não funciona
-					// TODO vai ser necessário remover esse block se vc tirar o align-center
-					this.img.style.setProperty('display', 'block', 'important');
-
 					if (!this.img.style.width) {
-						$(this.img).css('width', $(this.img).width());
+						$(this.img).css({
+							width: $(this.img).find('video, img').width(),
+							display: 'block'
+						});
+					}
+					else {
+						$(this.img).css({display: 'block'});
 					}
 
                     DisplayStyle.add(this.img, 'block');
